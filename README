@@ -1,0 +1,72 @@
+/*
+ * Filename: README
+ * Author: Zhuowen Zou
+ * Date: 12/29/2018
+ */
+
+12/29 Update:
+	1. Data Trafic Visualizer now support configuration through user interface.
+	2. the app.R can now detect the OS, thus the modification to app.R mentioned 
+	in the original step in "How to run locally" & "How to deploy App to 
+	shinyapp.io " is no longer needed.
+	
+Description
+-----------
+    This Application extracts info from log file to display a graph that
+	represents the amount of bytes sent during a period of time
+
+Mechanism
+---------
+	After the user starts the app from app.R or go to the webpage 
+	(currently https://zhuowenzou.shinyapps.io/data_traffic_visualizer/), 
+	a page will be prompted for user to upload the log file. The server in 
+	app.R will call modifyConfig to create configuration file (config), then
+	it'll call datParser.exe(WIN)/datParser.out(LINUX) to read in config 
+	and to parse log file. The datParser will output temp.csv and stats.csv,
+	which will be read in by app.R server to process and draw graph.
+	
+How to run locally
+------------------
+    Requirement: Rstudio
+	Before running this program, make sure the following packages in Rstudio
+	is installed:
+		shiny, ggplot, gcookbook
+	To run this program:
+		1. Open app.R using Rstudio.
+		2. Click "Run App"
+		3. Follow the instructions on the popped page to create and interact with 
+		the graph.
+	
+How to run on shinyapps.io
+------------------
+	Go to webpage https://zhuowenzou.shinyapps.io/data_traffic_visualizer/. Follow 
+	the instruction on the popped page to create and interact with the graph.
+	
+How to deploy App to shinyapp.io 
+--------------------------------
+	Requirement: Rstudio
+	Before running this program, make sure the following packages in Rstudio
+	is installed:
+		shiny, rsconnect.
+		
+	Also make sure that the following files are in the main directory 
+	(Since the server runs on Linux, executable for WIN is optional):
+		1. app.R
+		2. datParser.out
+		3. modifyConfig.out
+		4. DeployRApp.R
+		
+	To deploy the App onto your account:
+		1. Open DeployRApp.R and run through the script.
+		2. The app should be appearing on your account upon success
+
+Additional Info
+---------------
+	1. Both datParser.exe and datParser.out are built from src/datParser.cpp.
+	You're more than welcome to modify it. The same goes for modifyConfig.
+	2. Examples of the input and intermediate files (temp.csv stats.csv) is 
+	Included as [filename]-example.[filetype]
+	3. for Local user: directly modifying the configuration in config will not
+	change the outcome, as the user interface will always reset it to default.
+	To change the default configuration, please make modification to app.R.
+
